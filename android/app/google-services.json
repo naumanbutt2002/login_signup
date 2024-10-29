@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "929223155283",
+    "project_id": "login-signup-naumanbutt2002",
+    "storage_bucket": "login-signup-naumanbutt2002.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:929223155283:android:1991893489148fccaeb0a6",
+        "android_client_info": {
+          "package_name": "com.naumanbutt2002.login_signup"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSgFc8KRHZOIMARoHFkPXwuwGmVX-tsgw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
