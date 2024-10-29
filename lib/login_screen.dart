@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gradient_elevated_button/gradient_elevated_button.dart';
+import 'package:login_signup/custom_icon.dart';
 import 'package:login_signup/home_screen.dart';
 import 'package:login_signup/signup_screen.dart';
 
@@ -203,15 +204,21 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: Color.fromARGB(255, 86, 107, 211),
                             ),
                             suffixIcon: IconButton(
-                              icon: Icon(passwordVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off),
+                              icon: passwordVisible
+                                  ? CustomIcon(
+                                      iconPath:
+                                          'assets/icons/password_visibility.svg',
+                                      size: 24.0,
+                                      color: Colors.black)
+                                  : CustomIcon(
+                                      iconPath:
+                                          'assets/icons/password_visibility_off.svg',
+                                      size: 24.0,
+                                      color: Colors.black),
                               onPressed: () {
-                                setState(
-                                  () {
-                                    passwordVisible = !passwordVisible;
-                                  },
-                                );
+                                setState(() {
+                                  passwordVisible = !passwordVisible;
+                                });
                               },
                             ),
                             filled: true,
@@ -289,11 +296,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: const Color.fromARGB(255, 7, 8, 9).withOpacity(0.2),
+                      color:
+                          const Color.fromARGB(255, 7, 8, 9).withOpacity(0.2),
                       spreadRadius: 10,
                       blurRadius: 10,
-                      offset:
-                          const Offset(0, 0), // Offset of shadow in x and y direction
+                      offset: const Offset(
+                          0, 0), // Offset of shadow in x and y direction
                     ),
                   ],
                 ),
