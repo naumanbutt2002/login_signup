@@ -308,7 +308,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   const SizedBox(height: 10),
                   Divider(
                     color: Colors.transparent,
-                    height: MediaQuery.of(context).size.height * 0.1,
+                    height: MediaQuery.of(context).size.height * 0.05,
                   ),
                   GradientElevatedButton(
                     onPressed: _signup,
@@ -357,7 +357,6 @@ class _SignupScreenState extends State<SignupScreen> {
                 ],
               ),
             ),
-
             Positioned(
               top: -175,
               left: -175,
@@ -379,27 +378,8 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
               ),
             ),
-
-            // Positioned(
-            //   top: MediaQuery.of(context).size.height * 0.07,
-            //   left: 0,
-            //   right: 0,
-            //   child: GestureDetector(
-            //     onTap: _pickImage,
-            //     child: CircleAvatar(
-            //       radius: 80,
-            //       backgroundColor: Colors.grey,
-            //       backgroundImage:
-            //           _pickedImage != null ? FileImage(_pickedImage!) : null,
-            //       child: _pickedImage == null
-            //           ? Icon(Icons.person, size: 80, color: Colors.white)
-            //           : null,
-            //     ),
-            //   ),
-            // ),
-
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.07,
+              top: MediaQuery.of(context).size.height * 0.05,
               left: 0,
               right: 0,
               child: GestureDetector(
@@ -420,7 +400,6 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
               ),
             ),
-
             Positioned(
               top: 0,
               left: 0,

@@ -8,7 +8,7 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  static const int _logoutDelay = 10;
+  static const int _logoutDelay = 100000000;
   int _counter = _logoutDelay;
   Timer? _timer;
 
@@ -68,11 +68,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
         ),
         toolbarHeight: MediaQuery.of(context).size.height * 0.1,
-        title: Center(
-          child: Text(
-            'Home',
-            style: TextStyle(color: Colors.black),
-          ),
+        title: Text(
+          'Home',
+          style: TextStyle(color: Colors.black),
         ),
         backgroundColor: Colors.white,
         clipBehavior: Clip.antiAlias,

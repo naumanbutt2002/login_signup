@@ -192,7 +192,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         controller: _passwordController,
                         focusNode: _passwordFocusNode,
                         obscureText: !passwordVisible,
-                        obscuringCharacter: '*',                        decoration: InputDecoration(
+                        obscuringCharacter: '*',
+                        decoration: InputDecoration(
                           prefixIcon: const Icon(
                             Icons.lock,
                             color: Color.fromARGB(255, 86, 107, 211),
@@ -236,7 +237,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 10),
                 Divider(
                   color: Colors.transparent,
-                  height: MediaQuery.of(context).size.height * 0.2,
+                  height: MediaQuery.of(context).size.height * 0.1,
                 ),
                 GradientElevatedButton(
                   onPressed: _login,
