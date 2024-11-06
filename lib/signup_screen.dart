@@ -6,8 +6,11 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'login_screen.dart';
 import 'package:gradient_elevated_button/gradient_elevated_button.dart';
+import 'package:login_signup/custom_icon.dart';
 
 class SignupScreen extends StatefulWidget {
+  const SignupScreen({super.key});
+
   @override
   _SignupScreenState createState() => _SignupScreenState();
 }
@@ -18,6 +21,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final _passwordController = TextEditingController();
   final _usernameController = TextEditingController();
   File? _pickedImage;
+  bool passwordVisible = false;
 
   FocusNode _usernameFocusNode = FocusNode();
   FocusNode _emailFocusNode = FocusNode();
@@ -179,245 +183,275 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 86, 107, 211),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(height: MediaQuery.of(context).size.height * 0.3),
-                const SizedBox(height: 30),
-                const Text(
-                  'Create an Account',
-                  style: TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        backgroundColor: const Color.fromARGB(255, 86, 107, 211),
+        resizeToAvoidBottomInset: false,
+        body: Stack(
+          children: [
+            SafeArea(
+              child: Column(
+                children: [
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.25),
+                  const SizedBox(height: 30),
+                  const Text(
+                    'Create an Account',
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 10),
-                const Text(
-                  'Sign up to get started',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white70,
+                  const SizedBox(height: 10),
+                  const Text(
+                    'Sign up to get started',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white70,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 30),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 20),
-                      TextField(
-                        focusNode: _usernameFocusNode,
-                        controller: _usernameController,
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.person,
-                              color: Color.fromARGB(255, 86, 107, 211)),
-                          hintText:
-                              _usernameFocusNode.hasFocus ? '' : 'Username',
-                          hintStyle: const TextStyle(
-                            color: Color.fromARGB(255, 86, 107, 211),
-                          ),
-                          filled: true,
-                          fillColor: Colors.white.withOpacity(0.8),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                            borderSide: BorderSide.none,
+                  const SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 20),
+                        TextField(
+                          focusNode: _usernameFocusNode,
+                          controller: _usernameController,
+                          decoration: InputDecoration(
+                            prefixIcon: const Icon(Icons.person,
+                                color: Color.fromARGB(255, 86, 107, 211)),
+                            hintText:
+                                _usernameFocusNode.hasFocus ? '' : 'Username',
+                            hintStyle: const TextStyle(
+                              color: Color.fromARGB(255, 86, 107, 211),
+                            ),
+                            filled: true,
+                            fillColor: Colors.white.withOpacity(0.8),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30),
+                              borderSide: BorderSide.none,
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 20),
-                      TextField(
-                        focusNode: _emailFocusNode,
-                        controller: _emailController,
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.email,
-                              color: Color.fromARGB(255, 86, 107, 211)),
-                          hintText: _emailFocusNode.hasFocus ? '' : 'Email',
-                          hintStyle: const TextStyle(
-                            color: Color.fromARGB(255, 86, 107, 211),
+                        const SizedBox(height: 20),
+                        TextField(
+                          focusNode: _emailFocusNode,
+                          controller: _emailController,
+                          decoration: InputDecoration(
+                            prefixIcon: const Icon(Icons.email,
+                                color: Color.fromARGB(255, 86, 107, 211)),
+                            hintText: _emailFocusNode.hasFocus ? '' : 'Email',
+                            hintStyle: const TextStyle(
+                              color: Color.fromARGB(255, 86, 107, 211),
+                            ),
+                            filled: true,
+                            fillColor: Colors.white.withOpacity(0.8),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30),
+                              borderSide: BorderSide.none,
+                            ),
                           ),
-                          filled: true,
-                          fillColor: Colors.white.withOpacity(0.8),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                            borderSide: BorderSide.none,
+                          keyboardType: TextInputType.emailAddress,
+                        ),
+                        const SizedBox(height: 20),
+                        TextField(
+                          controller: _passwordController,
+                          focusNode: _passwordFocusNode,
+                          obscureText: !passwordVisible,
+                          obscuringCharacter: '*',
+                          decoration: InputDecoration(
+                            prefixIcon: const Icon(
+                              Icons.lock,
+                              color: Color.fromARGB(255, 86, 107, 211),
+                            ),
+                            hintText:
+                                _passwordFocusNode.hasFocus ? '' : 'Password',
+                            hintStyle: const TextStyle(
+                              color: Color.fromARGB(255, 86, 107, 211),
+                            ),
+                            suffixIcon: IconButton(
+                              icon: passwordVisible
+                                  ? const CustomIcon(
+                                      iconPath:
+                                          'assets/icons/password_visibility_off.svg',
+                                      size: 24.0,
+                                      color: Color.fromARGB(255, 86, 107, 211),
+                                    )
+                                  : const CustomIcon(
+                                      iconPath:
+                                          'assets/icons/password_visibility.svg',
+                                      size: 24.0,
+                                      color: Color.fromARGB(255, 86, 107, 211),
+                                    ),
+                              onPressed: () {
+                                setState(() {
+                                  passwordVisible = !passwordVisible;
+                                });
+                              },
+                            ),
+                            filled: true,
+                            fillColor: Colors.white.withOpacity(0.8),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30),
+                              borderSide: BorderSide.none,
+                            ),
                           ),
                         ),
-                        keyboardType: TextInputType.emailAddress,
-                      ),
-                      const SizedBox(height: 20),
-                      TextField(
-                        controller: _passwordController,
-                        focusNode: _passwordFocusNode,
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.lock,
-                              color: Color.fromARGB(255, 86, 107, 211)),
-                          hintText:
-                              _passwordFocusNode.hasFocus ? '' : 'Password',
-                          hintStyle: const TextStyle(
-                            color: Color.fromARGB(255, 86, 107, 211),
-                          ),
-                          filled: true,
-                          fillColor: Colors.white.withOpacity(0.8),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
-                        obscureText: true,
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Divider(
-                  color: Colors.transparent,
-                  height: MediaQuery.of(context).size.height * 0.1,
-                ),
-                GradientElevatedButton(
-                  onPressed: _signup,
-                  style: GradientElevatedButton.styleFrom(
-                    gradient: const LinearGradient(
-                      colors: [
-                        Color.fromARGB(255, 42, 59, 92),
-                        Color.fromARGB(255, 58, 80, 148),
                       ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.topRight,
                     ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
+                  ),
+                  const SizedBox(height: 10),
+                  Divider(
+                    color: Colors.transparent,
+                    height: MediaQuery.of(context).size.height * 0.1,
+                  ),
+                  GradientElevatedButton(
+                    onPressed: _signup,
+                    style: GradientElevatedButton.styleFrom(
+                      gradient: const LinearGradient(
+                        colors: [
+                          Color.fromARGB(255, 42, 59, 92),
+                          Color.fromARGB(255, 58, 80, 148),
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.topRight,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      fixedSize: const Size(340, 55),
                     ),
-                    fixedSize: const Size(340, 55),
+                    child: const Text(
+                      'SIGN UP',
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
                   ),
-                  child: const Text(
-                    'SIGN UP',
-                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  const SizedBox(height: 30),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                      );
+                    },
+                    child: RichText(
+                      text: const TextSpan(
+                        text: 'Already have an account? ',
+                        style: TextStyle(color: Colors.white),
+                        children: [
+                          TextSpan(
+                            text: 'Login',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
+                ],
+              ),
+            ),
+
+            Positioned(
+              top: -175,
+              left: -175,
+              right: -175,
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.5,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color:
+                          const Color.fromARGB(255, 7, 8, 9).withOpacity(0.2),
+                      spreadRadius: 10,
+                      blurRadius: 10,
+                      offset: const Offset(0, 0),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 30),
-                TextButton(
+              ),
+            ),
+
+            // Positioned(
+            //   top: MediaQuery.of(context).size.height * 0.07,
+            //   left: 0,
+            //   right: 0,
+            //   child: GestureDetector(
+            //     onTap: _pickImage,
+            //     child: CircleAvatar(
+            //       radius: 80,
+            //       backgroundColor: Colors.grey,
+            //       backgroundImage:
+            //           _pickedImage != null ? FileImage(_pickedImage!) : null,
+            //       child: _pickedImage == null
+            //           ? Icon(Icons.person, size: 80, color: Colors.white)
+            //           : null,
+            //     ),
+            //   ),
+            // ),
+
+            Positioned(
+              top: MediaQuery.of(context).size.height * 0.07,
+              left: 0,
+              right: 0,
+              child: GestureDetector(
+                onTap: _pickImage,
+                child: CircleAvatar(
+                  radius: 80,
+                  backgroundColor: Colors.grey,
+                  child: _pickedImage != null
+                      ? ClipOval(
+                          child: Image.file(
+                            _pickedImage!,
+                            width: 160,
+                            height: 160,
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                      : const Icon(Icons.person, size: 80, color: Colors.white),
+                ),
+              ),
+            ),
+
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: AppBar(
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                centerTitle: true,
+                leading: IconButton(
                   onPressed: () {
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (context) => LoginScreen()),
                     );
                   },
-                  child: RichText(
-                    text: const TextSpan(
-                      text: 'Already have an account? ',
-                      style: TextStyle(color: Colors.white),
-                      children: [
-                        TextSpan(
-                          text: 'Login',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
+                  icon: Container(
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.04),
+                        shape: BoxShape.circle),
+                    child: const Icon(
+                      Icons.arrow_back_ios_new,
+                      size: 15,
+                      color: Colors.black,
                     ),
                   ),
                 ),
-              ],
-            ),
-          ),
-
-          Positioned(
-            top: -175,
-            left: -175,
-            right: -175,
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.5,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.circle,
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color.fromARGB(255, 7, 8, 9).withOpacity(0.2),
-                    spreadRadius: 10,
-                    blurRadius: 10,
-                    offset: const Offset(0, 0),
-                  ),
-                ],
               ),
             ),
-          ),
-
-          // Positioned(
-          //   top: MediaQuery.of(context).size.height * 0.07,
-          //   left: 0,
-          //   right: 0,
-          //   child: GestureDetector(
-          //     onTap: _pickImage,
-          //     child: CircleAvatar(
-          //       radius: 80,
-          //       backgroundColor: Colors.grey,
-          //       backgroundImage:
-          //           _pickedImage != null ? FileImage(_pickedImage!) : null,
-          //       child: _pickedImage == null
-          //           ? Icon(Icons.person, size: 80, color: Colors.white)
-          //           : null,
-          //     ),
-          //   ),
-          // ),
-
-          Positioned(
-            top: MediaQuery.of(context).size.height * 0.07,
-            left: 0,
-            right: 0,
-            child: GestureDetector(
-              onTap: _pickImage,
-              child: CircleAvatar(
-                radius: 80,
-                backgroundColor: Colors.grey,
-                child: _pickedImage != null
-                    ? ClipOval(
-                        child: Image.file(
-                          _pickedImage!,
-                          width: 160,
-                          height: 160,
-                          fit: BoxFit.cover,
-                        ),
-                      )
-                    : const Icon(Icons.person, size: 80, color: Colors.white),
-              ),
-            ),
-          ),
-
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: AppBar(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              centerTitle: true,
-              leading: IconButton(
-                onPressed: () {
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => LoginScreen()),
-                  );
-                },
-                icon: Container(
-                  height: 50,
-                  width: 50,
-                  decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.04),
-                      shape: BoxShape.circle),
-                  child: const Icon(
-                    Icons.arrow_back_ios_new,
-                    size: 15,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

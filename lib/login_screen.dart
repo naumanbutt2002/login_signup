@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gradient_elevated_button/gradient_elevated_button.dart';
 import 'package:login_signup/custom_icon.dart';
-import 'package:login_signup/home_screen.dart';
+import 'package:login_signup/dashboard_screen.dart';
 import 'package:login_signup/signup_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -123,7 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => HomeScreen()),
+        MaterialPageRoute(builder: (context) => DashboardScreen()),
       );
     } catch (e) {
       _showErrorDialog('Login failed. Please check your credentials.');
@@ -134,157 +134,157 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        _usernameFocusNode.unfocus();
-        _passwordFocusNode.unfocus();
+        FocusScope.of(context).unfocus();
       },
       child: Scaffold(
         backgroundColor: const Color.fromARGB(255, 86, 107, 211),
+        resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
-            // Background content
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.3),
-                  const SizedBox(height: 30),
-                  const Text(
-                    'Welcome Back',
-                    style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
+            Column(
+              children: [
+                SizedBox(height: MediaQuery.of(context).size.height * 0.3),
+                const SizedBox(height: 30),
+                const Text(
+                  'Welcome Back',
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
-                  const SizedBox(height: 10),
-                  const Text(
-                    'Login to your account',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white70,
-                    ),
+                ),
+                const SizedBox(height: 10),
+                const Text(
+                  'Login to your account',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white70,
                   ),
-                  const SizedBox(height: 30),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                    child: Column(
-                      children: [
-                        TextField(
-                          focusNode: _usernameFocusNode,
-                          cursorColor: const Color.fromARGB(255, 86, 107, 211),
-                          controller: _emailController,
-                          decoration: InputDecoration(
-                            prefixIcon: const Icon(
-                              Icons.person,
-                              color: Color.fromARGB(255, 86, 107, 211),
-                            ),
-                            hintText:
-                                _usernameFocusNode.hasFocus ? '' : 'Email',
-                            hintStyle: const TextStyle(
-                              color: Color.fromARGB(255, 86, 107, 211),
-                            ),
-                            filled: true,
-                            fillColor: Colors.white.withOpacity(0.8),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30),
-                              borderSide: BorderSide.none,
-                            ),
+                ),
+                const SizedBox(height: 30),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                  child: Column(
+                    children: [
+                      TextField(
+                        focusNode: _usernameFocusNode,
+                        cursorColor: const Color.fromARGB(255, 86, 107, 211),
+                        controller: _emailController,
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(
+                            Icons.person,
+                            color: Color.fromARGB(255, 86, 107, 211),
+                          ),
+                          hintText: _usernameFocusNode.hasFocus ? '' : 'Email',
+                          hintStyle: const TextStyle(
+                            color: Color.fromARGB(255, 86, 107, 211),
+                          ),
+                          filled: true,
+                          fillColor: Colors.white.withOpacity(0.8),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide: BorderSide.none,
                           ),
                         ),
-                        const SizedBox(height: 20),
-                        TextField(
-                          controller: _passwordController,
-                          focusNode: _passwordFocusNode,
-                          obscureText: passwordVisible,
-                          decoration: InputDecoration(
-                            prefixIcon: const Icon(Icons.lock,
-                                color: Color.fromARGB(255, 86, 107, 211)),
-                            hintText:
-                                _passwordFocusNode.hasFocus ? '' : 'Password',
-                            hintStyle: const TextStyle(
-                              color: Color.fromARGB(255, 86, 107, 211),
-                            ),
-                            suffixIcon: IconButton(
-                              icon: passwordVisible
-                                  ? CustomIcon(
-                                      iconPath:
-                                          'assets/icons/password_visibility.svg',
-                                      size: 24.0,
-                                      color: Colors.black)
-                                  : CustomIcon(
-                                      iconPath:
-                                          'assets/icons/password_visibility_off.svg',
-                                      size: 24.0,
-                                      color: Colors.black),
-                              onPressed: () {
-                                setState(() {
-                                  passwordVisible = !passwordVisible;
-                                });
-                              },
-                            ),
-                            filled: true,
-                            fillColor: Colors.white.withOpacity(0.8),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30),
-                              borderSide: BorderSide.none,
-                            ),
+                      ),
+                      const SizedBox(height: 20),
+                      TextField(
+                        controller: _passwordController,
+                        focusNode: _passwordFocusNode,
+                        obscureText: !passwordVisible,
+                        obscuringCharacter: '*',                        decoration: InputDecoration(
+                          prefixIcon: const Icon(
+                            Icons.lock,
+                            color: Color.fromARGB(255, 86, 107, 211),
+                          ),
+                          hintText:
+                              _passwordFocusNode.hasFocus ? '' : 'Password',
+                          hintStyle: const TextStyle(
+                            color: Color.fromARGB(255, 86, 107, 211),
+                          ),
+                          suffixIcon: IconButton(
+                            icon: passwordVisible
+                                ? const CustomIcon(
+                                    iconPath:
+                                        'assets/icons/password_visibility_off.svg',
+                                    size: 24.0,
+                                    color: Color.fromARGB(255, 86, 107, 211),
+                                  )
+                                : const CustomIcon(
+                                    iconPath:
+                                        'assets/icons/password_visibility.svg',
+                                    size: 24.0,
+                                    color: Color.fromARGB(255, 86, 107, 211),
+                                  ),
+                            onPressed: () {
+                              setState(() {
+                                passwordVisible = !passwordVisible;
+                              });
+                            },
+                          ),
+                          filled: true,
+                          fillColor: Colors.white.withOpacity(0.8),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide: BorderSide.none,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Divider(
+                  color: Colors.transparent,
+                  height: MediaQuery.of(context).size.height * 0.2,
+                ),
+                GradientElevatedButton(
+                  onPressed: _login,
+                  style: GradientElevatedButton.styleFrom(
+                    gradient: const LinearGradient(
+                      colors: [
+                        const Color.fromARGB(255, 42, 59, 92),
+                        Color.fromARGB(255, 58, 80, 148),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.topRight,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    fixedSize: const Size(340, 55),
+                  ),
+                  child: const Text(
+                    'LOGIN',
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  ),
+                ),
+                const SizedBox(height: 30),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                          builder: (context) => const SignupScreen()),
+                    );
+                  },
+                  child: RichText(
+                    text: const TextSpan(
+                      text: 'Don’t have an account? ',
+                      style: TextStyle(color: Colors.white),
+                      children: [
+                        TextSpan(
+                          text: 'Sign Up',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 10),
-                  Divider(
-                    color: Colors.transparent,
-                    height: MediaQuery.of(context).size.height * 0.2,
-                  ),
-                  GradientElevatedButton(
-                    onPressed: _login,
-                    style: GradientElevatedButton.styleFrom(
-                      gradient: const LinearGradient(
-                        colors: [
-                          const Color.fromARGB(255, 42, 59, 92),
-                          const Color.fromARGB(255, 58, 80, 148),
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.topRight,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      fixedSize: const Size(340, 55),
-                    ),
-                    child: const Text(
-                      'LOGIN',
-                      style: TextStyle(fontSize: 18, color: Colors.white),
-                    ),
-                  ),
-                  const SizedBox(height: 30),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) => SignupScreen()),
-                      );
-                    },
-                    child: RichText(
-                      text: const TextSpan(
-                        text: 'Don’t have an account? ',
-                        style: TextStyle(color: Colors.white),
-                        children: [
-                          TextSpan(
-                            text: 'Sign Up',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-
             Positioned(
               top: -175,
               left: -175,

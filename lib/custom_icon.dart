@@ -7,11 +7,11 @@ class CustomIcon extends StatelessWidget {
   final String iconPath;
 
   const CustomIcon({
-    Key? key,
+    super.key,
     required this.iconPath,
     this.size = 24.0,
     this.color,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
